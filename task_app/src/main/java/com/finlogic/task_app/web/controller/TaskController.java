@@ -1,4 +1,4 @@
-package com.finlogic.task_app.controller;
+package com.finlogic.task_app.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +13,6 @@ public class TaskController {
 
     @GetMapping
     public String getMessage() {
-        return "Hello Spring Boot";
+        return "Hello Dishang H. Rana";
     }
 }
