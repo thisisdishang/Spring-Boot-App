@@ -1,7 +1,7 @@
 package com.finlogic.task_app.business.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class TaskService {
+public interface TaskService {
+    List getTasks();
 }

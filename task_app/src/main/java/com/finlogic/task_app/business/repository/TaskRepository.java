@@ -1,8 +1,7 @@
 package com.finlogic.task_app.business.repository;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
-public class TaskRepository {
-
+public interface TaskRepository {
+    List getData();
 }
