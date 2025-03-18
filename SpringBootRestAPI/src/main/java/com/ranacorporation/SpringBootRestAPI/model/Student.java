@@ -2,9 +2,9 @@ package com.ranacorporation.SpringBootRestAPI.model;
 
 public class Student {
     private long id;
-    private long name;
-    private long email;
-    private long course;
+    private String name;
+    private String email;
+    private String course;
 
     public long getId() {
         return id;
@@ -14,27 +14,27 @@ public class Student {
         this.id = id;
     }
 
-    public long getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(long name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public long getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(long email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public long getCourse() {
+    public String getCourse() {
         return course;
     }
 
-    public void setCourse(long course) {
+    public void setCourse(String course) {
         this.course = course;
     }
 }
