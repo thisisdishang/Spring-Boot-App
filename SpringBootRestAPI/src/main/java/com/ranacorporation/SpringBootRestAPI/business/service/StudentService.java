@@ -7,9 +7,9 @@ import java.util.List;
 public interface StudentService {
     List<Student> findAll();
 
-    Student findById(long id);
+    Student getById(long id);
 
-    int save(Student student);
+    void create(Student student);
 
     int update(long id, Student student);
 

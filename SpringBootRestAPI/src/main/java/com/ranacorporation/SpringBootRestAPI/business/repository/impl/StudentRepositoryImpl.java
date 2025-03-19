@@ -38,12 +38,12 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student findById(long id) {
-        return null;
+        return jdbcTemplate.queryForObject("Select * from students where id=?", studentRowMapper, id);
     }
 
     @Override
     public int save(Student student) {
-        return 0;
+        return jdbcTemplate.update("Insert into students (name, email, course) values (?, ?, ?)", student.getName(), student.getEmail(), student.getCourse());
     }
 
     @Override
