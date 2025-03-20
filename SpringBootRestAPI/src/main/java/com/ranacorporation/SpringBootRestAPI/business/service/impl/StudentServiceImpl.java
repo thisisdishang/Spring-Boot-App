@@ -30,12 +30,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int update(long id, Student student) {
-        return 0;
+    public void update(long id, Student student) {
+        studentRepository.update(id, student);
     }
 
     @Override
-    public int delete(long id) {
-        return 0;
+    public void delete(long id) {
+        studentRepository.delete(id);
     }
 }

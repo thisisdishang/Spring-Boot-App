@@ -33,26 +33,26 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public List<Student> findAll() {
-        return jdbcTemplate.query("Select * from students", studentRowMapper);
+        return jdbcTemplate.query("SELECT * FROM STUDENTS", studentRowMapper);
     }
 
     @Override
     public Student findById(long id) {
-        return jdbcTemplate.queryForObject("Select * from students where id=?", studentRowMapper, id);
+        return jdbcTemplate.queryForObject("SELECT * FROM STUDENTS WHERE ID=?", studentRowMapper, id);
     }
 
     @Override
     public int save(Student student) {
-        return jdbcTemplate.update("Insert into students (name, email, course) values (?, ?, ?)", student.getName(), student.getEmail(), student.getCourse());
+        return jdbcTemplate.update("INSERT INTO STUDENTS (NAME, EMAIL, COURSE) VALUES (?, ?, ?)", student.getName(), student.getEmail(), student.getCourse());
     }
 
     @Override
     public int update(long id, Student student) {
-        return 0;
+        return jdbcTemplate.update("UPDATE STUDENTS SET NAME=?, EMAIL=?, COURSE=? WHERE ID=?", student.getName(), student.getEmail(), student.getCourse(), id);
     }
 
     @Override
     public int delete(long id) {
-        return 0;
+        return jdbcTemplate.update("DELETE FROM STUDENTS WHERE ID=?", id);
     }
 }
