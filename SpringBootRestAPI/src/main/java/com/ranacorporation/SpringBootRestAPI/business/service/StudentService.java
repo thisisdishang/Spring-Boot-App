@@ -9,7 +9,7 @@ public interface StudentService {
 
     Student getById(long id);
 
-    void create(Student student);
+    long create(Student student);
 
     void update(long id, Student student);
 

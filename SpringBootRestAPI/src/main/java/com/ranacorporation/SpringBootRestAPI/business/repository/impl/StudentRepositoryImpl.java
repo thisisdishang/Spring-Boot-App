@@ -2,21 +2,22 @@ package com.ranacorporation.SpringBootRestAPI.business.repository.impl;
 
 import com.ranacorporation.SpringBootRestAPI.business.repository.StudentRepository;
 import com.ranacorporation.SpringBootRestAPI.model.Student;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public StudentRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public StudentRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     private final RowMapper<Student> studentRowMapper = new RowMapper<>() {
@@ -33,26 +34,34 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public List<Student> findAll() {
-        return jdbcTemplate.query("SELECT * FROM STUDENTS", studentRowMapper);
+        return namedParameterJdbcTemplate.query("SELECT * FROM STUDENTS", studentRowMapper);
     }
 
     @Override
     public Student findById(long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM STUDENTS WHERE ID=?", studentRowMapper, id);
+        String query = "SELECT * FROM STUDENTS WHERE ID=:ID";
+        Map<String, Object> params = Map.of("ID", id);
+        return namedParameterJdbcTemplate.queryForObject(query, params, studentRowMapper);
     }
 
     @Override
-    public int save(Student student) {
-        return jdbcTemplate.update("INSERT INTO STUDENTS (NAME, EMAIL, COURSE) VALUES (?, ?, ?)", student.getName(), student.getEmail(), student.getCourse());
+    public long save(Student student) {
+        String query = "INSERT INTO STUDENTS (NAME, EMAIL, COURSE) VALUES (:NAME, :EMAIL, :COURSE)";
+        Map<String, Object> params = Map.of("NAME", student.getName(), "EMAIL", student.getEmail(), "COURSE", student.getCourse());
+        return namedParameterJdbcTemplate.update(query, params);
     }
 
     @Override
     public int update(long id, Student student) {
-        return jdbcTemplate.update("UPDATE STUDENTS SET NAME=?, EMAIL=?, COURSE=? WHERE ID=?", student.getName(), student.getEmail(), student.getCourse(), id);
+        String query = "UPDATE STUDENTS SET NAME=:NAME, EMAIL=:EMAIL, COURSE=:COURSE WHERE ID=:ID";
+        Map<String, Object> params = Map.of("NAME", student.getName(), "EMAIL", student.getEmail(), "COURSE", student.getCourse(), "ID", id);
+        return namedParameterJdbcTemplate.update(query, params);
     }
 
     @Override
     public int delete(long id) {
-        return jdbcTemplate.update("DELETE FROM STUDENTS WHERE ID=?", id);
+        String query = "DELETE FROM STUDENTS WHERE ID=:ID";
+        Map<String, Object> params = Map.of("ID", id);
+        return namedParameterJdbcTemplate.update(query, params);
     }
 }

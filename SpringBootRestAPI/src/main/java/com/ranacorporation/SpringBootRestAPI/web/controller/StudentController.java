@@ -4,9 +4,11 @@ import com.ranacorporation.SpringBootRestAPI.business.service.StudentService;
 import com.ranacorporation.SpringBootRestAPI.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/students")
@@ -20,14 +22,16 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public Student getById(@PathVariable long id) {
-        return studentService.getById(id);
+    public ResponseEntity<?> getById(@PathVariable long id) {
+        Student student = studentService.getById(id);
+        return ResponseEntity.ok(Map.of("student", student));
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody Student student) {
-        studentService.create(student);
+    public ResponseEntity<?> create(@RequestBody Student student) {
+        long id = studentService.create(student);
+        student.setId(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("isSuccess", true, "student", student));
     }
 
     @DeleteMapping("/{id}")
@@ -36,8 +40,10 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable long id, @RequestBody Student student) {
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Student student) {
         studentService.update(id, student);
+        student.setId(id);
+        return ResponseEntity.ok(Map.of("isSuccess", true, "student", student));
     }
 
 }

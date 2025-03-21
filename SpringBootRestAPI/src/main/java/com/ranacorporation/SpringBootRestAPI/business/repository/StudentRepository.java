@@ -9,7 +9,7 @@ public interface StudentRepository {
 
     Student findById(long id);
 
-    int save(Student student);
+    long save(Student student);
 
     int update(long id, Student student);
 
