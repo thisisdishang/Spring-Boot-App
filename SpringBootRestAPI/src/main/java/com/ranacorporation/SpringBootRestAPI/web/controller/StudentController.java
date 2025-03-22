@@ -29,8 +29,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Student student) {
-        long id = studentService.create(student);
-        student.setId(id);
+        Student newStudent = studentService.create(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("isSuccess", true, "student", student));
     }
 
