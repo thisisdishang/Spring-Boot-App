@@ -38,4 +38,9 @@ public class StudentServiceImpl implements StudentService {
     public void delete(long id) {
         studentRepository.delete(id);
     }
+
+    @Override
+    public List<Student> getPage(int page, int size) {
+        return studentRepository.getPage(page, size);
+    }
 }

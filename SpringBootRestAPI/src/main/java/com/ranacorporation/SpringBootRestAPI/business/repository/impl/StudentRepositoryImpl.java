@@ -77,4 +77,11 @@ public class StudentRepositoryImpl implements StudentRepository {
         Map<String, Object> params = Map.of("ID", id);
         return namedParameterJdbcTemplate.update(query, params);
     }
+
+    @Override
+    public List<Student> getPage(int page, int size) {
+        String query = "SELECT * FROM STUDENTS LIMIT :LIMIT OFFSET :OFFSET";
+        Map<String, Object> params = Map.of("LIMIT", size, "OFFSET", page * size);
+        return namedParameterJdbcTemplate.query(query, params, studentRowMapper);
+    }
 }

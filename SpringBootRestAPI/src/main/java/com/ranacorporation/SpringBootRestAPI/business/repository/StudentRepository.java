@@ -14,4 +14,6 @@ public interface StudentRepository {
     int update(long id, Student student);
 
     int delete(long id);
+
+    List<Student> getPage(int page, int size);
 }

@@ -45,4 +45,9 @@ public class StudentController {
         return ResponseEntity.ok(Map.of("isSuccess", true, "student", student));
     }
 
+    @GetMapping("/page")
+    public List<Student> getPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return studentService.getPage(page, size);
+    }
+
 }

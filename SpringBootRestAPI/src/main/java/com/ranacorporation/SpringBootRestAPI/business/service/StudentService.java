@@ -14,4 +14,6 @@ public interface StudentService {
     void update(long id, Student student);
 
     void delete(long id);
+
+    List<Student> getPage(int page, int size);
 }
