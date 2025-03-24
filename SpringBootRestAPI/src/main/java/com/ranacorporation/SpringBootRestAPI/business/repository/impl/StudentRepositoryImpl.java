@@ -43,7 +43,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student findById(long id) {
         String query = "SELECT * FROM STUDENTS WHERE ID=:ID";
-        Map<String, Object> params = Map.of("ID", id);
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("ID", id);
         return namedParameterJdbcTemplate.queryForObject(query, params, studentRowMapper);
     }
 
@@ -67,21 +68,28 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public int update(long id, Student student) {
         String query = "UPDATE STUDENTS SET NAME=:NAME, EMAIL=:EMAIL, COURSE=:COURSE WHERE ID=:ID";
-        Map<String, Object> params = Map.of("NAME", student.getName(), "EMAIL", student.getEmail(), "COURSE", student.getCourse(), "ID", id);
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("NAME", student.getName())
+                .addValue("EMAIL", student.getEmail())
+                .addValue("COURSE", student.getCourse())
+                .addValue("ID", id);
         return namedParameterJdbcTemplate.update(query, params);
     }
 
     @Override
     public int delete(long id) {
         String query = "DELETE FROM STUDENTS WHERE ID=:ID";
-        Map<String, Object> params = Map.of("ID", id);
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("ID", id);
         return namedParameterJdbcTemplate.update(query, params);
     }
 
     @Override
     public List<Student> getPage(int page, int size) {
         String query = "SELECT * FROM STUDENTS LIMIT :LIMIT OFFSET :OFFSET";
-        Map<String, Object> params = Map.of("LIMIT", size, "OFFSET", page * size);
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("LIMIT", size)
+                .addValue("OFFSET", page * size);
         return namedParameterJdbcTemplate.query(query, params, studentRowMapper);
     }
 }
