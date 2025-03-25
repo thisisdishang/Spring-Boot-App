@@ -16,4 +16,6 @@ public interface StudentService {
     void delete(long id);
 
     List<Student> getPage(int page, int size);
+
+    List<Student> saveAll(List<Student> students);
 }

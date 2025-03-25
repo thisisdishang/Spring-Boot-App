@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
@@ -91,5 +91,27 @@ public class StudentRepositoryImpl implements StudentRepository {
                 .addValue("LIMIT", size)
                 .addValue("OFFSET", page * size);
         return namedParameterJdbcTemplate.query(query, params, studentRowMapper);
+    }
+
+    @Override
+    public List<Student> saveAll(List<Student> students) {
+        String query = "INSERT INTO STUDENTS (NAME, EMAIL, COURSE) VALUES (:NAME, :EMAIL, :COURSE)";
+        List<Student> savedStudents = new ArrayList<>();
+
+        for (Student s : students) {
+            MapSqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("NAME", s.getName())
+                    .addValue("EMAIL", s.getEmail())
+                    .addValue("COURSE", s.getCourse());
+
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+
+            namedParameterJdbcTemplate.update(query, params, keyHolder, new String[]{"ID"});
+
+            s.setId(keyHolder.getKey().intValue());
+
+            savedStudents.add(s);
+        }
+        return savedStudents;
     }
 }

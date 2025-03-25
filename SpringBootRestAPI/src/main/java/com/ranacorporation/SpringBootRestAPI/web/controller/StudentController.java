@@ -50,4 +50,10 @@ public class StudentController {
         return studentService.getPage(page, size);
     }
 
+    @PostMapping("/batch")
+    public ResponseEntity<?> saveAll(@RequestBody List<Student> students) {
+        List<Student> savedStudents = studentService.saveAll(students);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("students", savedStudents));
+    }
+
 }

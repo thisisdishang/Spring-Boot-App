@@ -43,4 +43,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getPage(int page, int size) {
         return studentRepository.getPage(page, size);
     }
+
+    @Override
+    public List<Student> saveAll(List<Student> students) {
+        return studentRepository.saveAll(students);
+    }
 }
