@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
@@ -113,5 +114,16 @@ public class StudentRepositoryImpl implements StudentRepository {
             savedStudents.add(s);
         }
         return savedStudents;
+    }
+
+    @Override
+    public int[] deleteAll(List<Integer> ids) {
+        String query = "DELETE FROM STUDENTS WHERE ID = :ID";
+
+        MapSqlParameterSource[] batchParams = ids.stream()
+                .map(integer -> new MapSqlParameterSource().addValue("ID", integer))
+                .toArray(MapSqlParameterSource[]::new);
+
+        return namedParameterJdbcTemplate.batchUpdate(query, batchParams);
     }
 }

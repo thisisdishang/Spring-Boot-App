@@ -56,4 +56,10 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("students", savedStudents));
     }
 
+    @DeleteMapping("/batch")
+    public String deleteAll(@RequestBody List<Integer> ids) {
+        int[] deletedStudents = studentService.deleteAll(ids);
+        return "Deleted " + deletedStudents.length + " students successfully";
+    }
+
 }

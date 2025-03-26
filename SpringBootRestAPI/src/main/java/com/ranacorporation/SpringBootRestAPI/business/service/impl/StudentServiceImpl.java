@@ -48,4 +48,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> saveAll(List<Student> students) {
         return studentRepository.saveAll(students);
     }
+
+    @Override
+    public int[] deleteAll(List<Integer> ids) {
+        return studentRepository.deleteAll(ids);
+    }
 }

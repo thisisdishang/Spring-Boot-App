@@ -18,4 +18,6 @@ public interface StudentRepository {
     List<Student> getPage(int page, int size);
 
     List<Student> saveAll(List<Student> students);
+
+    int[] deleteAll(List<Integer> ids);
 }
