@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
@@ -62,7 +61,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
         namedParameterJdbcTemplate.update(query, params, keyHolder, new String[]{"ID"});
 
-        student.setId(keyHolder.getKey().longValue());
+        student.setId(keyHolder.getKey().intValue());
         return student;
     }
 
