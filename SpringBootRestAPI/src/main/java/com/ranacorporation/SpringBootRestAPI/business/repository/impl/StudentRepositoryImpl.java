@@ -126,4 +126,24 @@ public class StudentRepositoryImpl implements StudentRepository {
 
         return namedParameterJdbcTemplate.batchUpdate(query, batchParams);
     }
+
+    @Override
+    public List<Student> updateAll(List<Student> students) {
+        String query = "UPDATE STUDENTS SET NAME = :NAME, EMAIL = :EMAIL, COURSE = :COURSE WHERE ID = :ID";
+        List<Student> updateStudents = new ArrayList<>();
+
+        for (Student s : students) {
+            MapSqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("ID", s.getId())
+                    .addValue("NAME", s.getName())
+                    .addValue("EMAIL", s.getEmail())
+                    .addValue("COURSE", s.getCourse());
+
+            namedParameterJdbcTemplate.update(query, params);
+
+            updateStudents.add(s);
+        }
+
+        return updateStudents;
+    }
 }

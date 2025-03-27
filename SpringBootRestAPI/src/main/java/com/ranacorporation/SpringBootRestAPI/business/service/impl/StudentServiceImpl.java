@@ -53,4 +53,9 @@ public class StudentServiceImpl implements StudentService {
     public int[] deleteAll(List<Integer> ids) {
         return studentRepository.deleteAll(ids);
     }
+
+    @Override
+    public List<Student> updateStudents(List<Student> students) {
+        return studentRepository.updateAll(students);
+    }
 }

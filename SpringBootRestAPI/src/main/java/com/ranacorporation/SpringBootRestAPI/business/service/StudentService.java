@@ -20,4 +20,6 @@ public interface StudentService {
     List<Student> saveAll(List<Student> students);
 
     int[] deleteAll(List<Integer> ids);
+
+    List<Student> updateStudents(List<Student> students);
 }

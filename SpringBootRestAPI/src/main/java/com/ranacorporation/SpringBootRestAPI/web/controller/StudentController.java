@@ -62,4 +62,10 @@ public class StudentController {
         return "Deleted " + deletedStudents.length + " students successfully";
     }
 
+    @PutMapping("/batch")
+    public ResponseEntity<?> updateAll(@RequestBody List<Student> students) {
+        List<Student> updatedStudents = studentService.updateStudents(students);
+        return ResponseEntity.ok(Map.of("isSuccess", true, "students", updatedStudents));
+    }
+
 }
