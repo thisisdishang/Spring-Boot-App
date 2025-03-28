@@ -52,8 +52,12 @@ public class StudentController {
 
     @PostMapping("/batch")
     public ResponseEntity<?> saveAll(@RequestBody List<Student> students) {
-        List<Student> savedStudents = studentService.saveAll(students);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("students", savedStudents));
+        try {
+            List<Student> savedStudents = studentService.saveAll(students);
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("students", savedStudents));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/batch")

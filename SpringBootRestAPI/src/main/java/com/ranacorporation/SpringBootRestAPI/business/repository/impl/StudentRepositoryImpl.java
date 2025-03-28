@@ -97,6 +97,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     public List<Student> saveAll(List<Student> students) {
         String query = "INSERT INTO STUDENTS (NAME, EMAIL, COURSE) VALUES (:NAME, :EMAIL, :COURSE)";
         List<Student> savedStudents = new ArrayList<>();
+        List<Student> failedStudents = new ArrayList<>();
 
         for (Student s : students) {
             MapSqlParameterSource params = new MapSqlParameterSource()
@@ -106,12 +107,20 @@ public class StudentRepositoryImpl implements StudentRepository {
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
 
-            namedParameterJdbcTemplate.update(query, params, keyHolder, new String[]{"ID"});
+            int row = namedParameterJdbcTemplate.update(query, params, keyHolder, new String[]{"ID"});
 
-            s.setId(keyHolder.getKey().intValue());
-
-            savedStudents.add(s);
+            if (row > 0 && keyHolder.getKey() != null) {
+                s.setId(keyHolder.getKey().intValue());
+                savedStudents.add(s);
+            } else {
+                failedStudents.add(s);
+            }
         }
+
+        if (!failedStudents.isEmpty()) {
+            throw new RuntimeException("Failed to insert some students: " + failedStudents);
+        }
+
         return savedStudents;
     }
 
