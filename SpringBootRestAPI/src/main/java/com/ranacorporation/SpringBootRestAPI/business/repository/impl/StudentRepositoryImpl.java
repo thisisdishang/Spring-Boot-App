@@ -118,7 +118,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
 
         if (!failedStudents.isEmpty()) {
-            throw new RuntimeException("Failed to insert some students: " + failedStudents);
+            throw new RuntimeException("Failed to save some students: " + failedStudents);
         }
 
         return savedStudents;
