@@ -100,6 +100,12 @@ public class StudentRepositoryImpl implements StudentRepository {
         List<Student> failedStudents = new ArrayList<>();
 
         for (Student s : students) {
+            // Validation check
+            if (s.getName() == null || s.getName().trim().isEmpty() || s.getEmail() == null || s.getEmail().trim().isEmpty() || s.getCourse() == null || s.getCourse().trim().isEmpty()) {
+                failedStudents.add(s);
+                continue;
+            }
+
             MapSqlParameterSource params = new MapSqlParameterSource()
                     .addValue("NAME", s.getName())
                     .addValue("EMAIL", s.getEmail())
@@ -118,7 +124,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
 
         if (!failedStudents.isEmpty()) {
-            throw new RuntimeException("Failed to save some students: " + failedStudents);
+            throw new RuntimeException("Failed to add some students: " + failedStudents);
         }
 
         return savedStudents;
