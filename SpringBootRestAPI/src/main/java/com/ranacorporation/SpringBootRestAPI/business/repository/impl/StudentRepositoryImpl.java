@@ -61,7 +61,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
         namedParameterJdbcTemplate.update(query, params, keyHolder, new String[]{"ID"});
 
-        student.setId(keyHolder.getKey().intValue());
+        student.setId(keyHolder.getKey().longValue());
         return student;
     }
 
@@ -116,7 +116,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             int row = namedParameterJdbcTemplate.update(query, params, keyHolder, new String[]{"ID"});
 
             if (row > 0 && keyHolder.getKey() != null) {
-                s.setId(keyHolder.getKey().intValue());
+                s.setId(keyHolder.getKey().longValue());
                 savedStudents.add(s);
             } else {
                 failedStudents.add(s);
@@ -145,17 +145,32 @@ public class StudentRepositoryImpl implements StudentRepository {
     public List<Student> updateAll(List<Student> students) {
         String query = "UPDATE STUDENTS SET NAME = :NAME, EMAIL = :EMAIL, COURSE = :COURSE WHERE ID = :ID";
         List<Student> updateStudents = new ArrayList<>();
+        List<Student> failedUpdate = new ArrayList<>();
 
         for (Student s : students) {
+            // Validation check
+            if (s.getName() == null || s.getName().trim().isEmpty() || s.getEmail() == null || s.getEmail().trim().isEmpty() || s.getCourse() == null || s.getCourse().trim().isEmpty() || s.getId() <= 0) {
+                failedUpdate.add(s);
+                continue;
+            }
+
             MapSqlParameterSource params = new MapSqlParameterSource()
                     .addValue("ID", s.getId())
                     .addValue("NAME", s.getName())
                     .addValue("EMAIL", s.getEmail())
                     .addValue("COURSE", s.getCourse());
 
-            namedParameterJdbcTemplate.update(query, params);
+            int row = namedParameterJdbcTemplate.update(query, params);
 
-            updateStudents.add(s);
+            if (row > 0) {
+                updateStudents.add(s);
+            } else {
+                failedUpdate.add(s);
+            }
+        }
+
+        if (!failedUpdate.isEmpty()) {
+            throw new RuntimeException("Failed to update some students: " + failedUpdate);
         }
 
         return updateStudents;

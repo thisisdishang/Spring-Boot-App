@@ -68,8 +68,12 @@ public class StudentController {
 
     @PutMapping("/batch")
     public ResponseEntity<?> updateAll(@RequestBody List<Student> students) {
-        List<Student> updatedStudents = studentService.updateStudents(students);
-        return ResponseEntity.ok(Map.of("isSuccess", true, "students", updatedStudents));
+        try {
+            List<Student> updatedStudents = studentService.updateStudents(students);
+            return ResponseEntity.ok(Map.of("isSuccess", true, "students", updatedStudents));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 }
