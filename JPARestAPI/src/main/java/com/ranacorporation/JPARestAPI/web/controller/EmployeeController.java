@@ -3,10 +3,7 @@ package com.ranacorporation.JPARestAPI.web.controller;
 import com.ranacorporation.JPARestAPI.business.service.EmployeeService;
 import com.ranacorporation.JPARestAPI.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,10 @@ public class EmployeeController {
     @GetMapping("/employees/{id}")
     public Employee getEmployee(@PathVariable int id) {
         return employeeService.getEmployee(id);
+    }
+
+    @PostMapping("/employee/add")
+    public void createEmployee(@RequestBody Employee employee) {
+        employeeService.createEmployee(employee);
     }
 }

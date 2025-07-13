@@ -22,4 +22,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployee(int id) {
         return employeeRepository.findById(id).get();
     }
+
+    @Override
+    public void createEmployee(Employee employee) {
+
+    }
 }
