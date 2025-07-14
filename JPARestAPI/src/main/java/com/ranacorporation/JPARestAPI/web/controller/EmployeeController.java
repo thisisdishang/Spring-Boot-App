@@ -3,6 +3,8 @@ package com.ranacorporation.JPARestAPI.web.controller;
 import com.ranacorporation.JPARestAPI.business.service.EmployeeService;
 import com.ranacorporation.JPARestAPI.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee/add")
-    public void createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         employeeService.createEmployee(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Employee created successfully!");
     }
 }
