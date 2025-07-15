@@ -27,4 +27,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void createEmployee(Employee employee) {
         employeeRepository.save(employee);
     }
+
+    @Override
+    public Employee updateEmployee(Employee employee, int id) {
+        return null;
+    }
 }

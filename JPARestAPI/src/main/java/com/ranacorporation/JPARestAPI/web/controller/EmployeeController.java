@@ -32,4 +32,9 @@ public class EmployeeController {
         employeeService.createEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body("Employee created successfully!");
     }
+
+    @PutMapping("/employee/update/{id}")
+    public Employee updateEmployee(@RequestBody Employee employee, @PathVariable int id) {
+        return employeeService.updateEmployee(employee, id);
+    }
 }
