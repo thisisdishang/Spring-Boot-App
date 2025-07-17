@@ -36,4 +36,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         e1.setDepartment(employee.getDepartment());
         return employeeRepository.save(e1);
     }
+
+    @Override
+    public void removeEmployee(int id) {
+
+    }
 }
