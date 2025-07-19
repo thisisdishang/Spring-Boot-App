@@ -39,6 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void removeEmployee(int id) {
-
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+        employeeRepository.delete(employee);
     }
 }
