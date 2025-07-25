@@ -1,4 +1,4 @@
-package com.ranacorporation.JPARestAPI.business.service;
+package com.ranacorporation.JPARestAPI.business.service.impl;
 
 import com.ranacorporation.JPARestAPI.entity.AuthUser;
 import com.ranacorporation.JPARestAPI.business.repository.AuthUserRepository;
